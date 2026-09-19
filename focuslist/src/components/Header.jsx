@@ -2,16 +2,27 @@ function Header() {
   return (
     <header className="app-header">
       <div className="header-content">
-        <div>
+        <div className="header-text">
           <p className="app-label">PRODUCTIVITY APP</p>
-          <h1>FocusList</h1>
+
+          <h1>FocusList - Simple Task Management App</h1>
+
           <p className="app-description">
-            Focus on what matters today.
+            FocusList is a simple and responsive task management app that
+            helps you create, organize, prioritize, search, and complete
+            your daily tasks in one place.
           </p>
         </div>
 
-        <div className="header-badge" aria-label="Local storage enabled">
-          <span className="status-dot"></span>
+        <div
+          className="header-badge"
+          aria-label="Tasks are saved locally"
+        >
+          <span
+            className="status-dot"
+            aria-hidden="true"
+          ></span>
+
           Saved locally
         </div>
       </div>

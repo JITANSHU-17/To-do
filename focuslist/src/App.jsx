@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import useLocalStorage from "./hooks/useLocalStorage";
 import "./App.css";
 
 import Header from "./components/Header";
@@ -9,6 +8,7 @@ import TaskFilters from "./components/TaskFilters";
 import TaskList from "./components/TaskList";
 
 import { createTask } from "./utils/taskUtils";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
   const [tasks, setTasks] = useLocalStorage("focuslist-tasks", []);
@@ -20,10 +20,7 @@ function App() {
   const handleAddTask = (title, taskPriority) => {
     const newTask = createTask(title, taskPriority);
 
-    setTasks((currentTasks) => [
-      newTask,
-      ...currentTasks,
-    ]);
+    setTasks((currentTasks) => [newTask, ...currentTasks]);
   };
 
   const handleToggleComplete = (taskId) => {
@@ -41,9 +38,7 @@ function App() {
 
   const handleDeleteTask = (taskId) => {
     setTasks((currentTasks) =>
-      currentTasks.filter(
-        (task) => task.id !== taskId
-      )
+      currentTasks.filter((task) => task.id !== taskId)
     );
   };
 
@@ -61,15 +56,11 @@ function App() {
   };
 
   const filteredTasks = useMemo(() => {
-    const normalizedSearch = search
-      .trim()
-      .toLowerCase();
+    const normalizedSearch = search.trim().toLowerCase();
 
     return tasks.filter((task) => {
       const matchesSearch =
-        task.title
-          .toLowerCase()
-          .includes(normalizedSearch);
+        task.title.toLowerCase().includes(normalizedSearch);
 
       const matchesStatus =
         status === "all" ||
@@ -88,14 +79,46 @@ function App() {
     });
   }, [tasks, search, status, priority]);
 
+  const hasActiveFilters =
+    search.trim() !== "" ||
+    status !== "all" ||
+    priority !== "all";
+
   return (
-    <div className="app">
-      <div className="app-container">
-        <Header />
+    <>
+      <Header />
 
-        <main>
-          <TaskStats tasks={tasks} />
+      <main className="app-container">
+        <section
+          className="intro-section"
+          aria-labelledby="task-management-heading"
+        >
+          <div className="intro-content">
+            <p className="section-label">
+              DAILY PRODUCTIVITY
+            </p>
 
+            <h2 id="task-management-heading">
+              Organize your tasks and stay focused
+            </h2>
+
+            <p>
+              Use this task management app to create daily
+              tasks, set priorities, track completion, and
+              quickly find the work that needs your attention.
+              Your tasks are stored locally in your browser,
+              so you can continue using FocusList after a
+              page refresh.
+            </p>
+          </div>
+        </section>
+
+        <TaskStats tasks={tasks} />
+
+        <section
+          className="task-management-section"
+          aria-label="Task management"
+        >
           <TaskForm onAddTask={handleAddTask} />
 
           <TaskFilters
@@ -112,15 +135,11 @@ function App() {
             onToggleComplete={handleToggleComplete}
             onDeleteTask={handleDeleteTask}
             onEditTask={handleEditTask}
-            hasActiveFilters={
-              search.trim() !== "" ||
-              status !== "all" ||
-              priority !== "all"
-            }
+            hasActiveFilters={hasActiveFilters}
           />
-        </main>
-      </div>
-    </div>
+        </section>
+      </main>
+    </>
   );
 }
 
