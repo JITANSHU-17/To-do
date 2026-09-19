@@ -6,7 +6,7 @@ A clean and responsive React-based To-Do application for managing daily tasks wi
 
 Add your deployed application URL here after deployment.
 
-**Live Demo:** `YOUR_DEPLOYED_URL`
+**Live Demo:** `https://focuslistjit.netlify.app/`
 
 ## GitHub Repository
 
@@ -103,7 +103,7 @@ npm -v
 Clone the repository:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/JITANSHU-17/To-do
 ```
 
 Move into the project directory:
